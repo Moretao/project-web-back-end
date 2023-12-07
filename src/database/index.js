@@ -4,12 +4,16 @@ const dbConfig = require("../config/database");
 
 const connection = new sequelize(dbConfig);
 
-try {
-    connection.authenticate();
-    console.log('Connection has been established successfully.');
-} catch (error) {
-    console.error('Unable to connect to the database:', error);
-}
+const Client = require('../models/Client');
+
+Client.init(connection);
+
+// try {
+//     connection.authenticate();
+//     console.log('Connection has been established successfully.');
+// } catch (error) {
+//     console.error('Unable to connect to the database:', error);
+// }
 
 
 
