@@ -8,7 +8,7 @@ class Client extends Model {
             name: DataTypes.STRING,
             password: DataTypes.STRING,
             email: DataTypes.STRING,
-            isLogged: DataTypes.BOOLEAN
+            islogged: DataTypes.BOOLEAN
         },
             {
                 sequelize,
@@ -23,6 +23,7 @@ class Client extends Model {
 
     static associate(models) {
         this.hasMany(models.Address, { foreignKey: 'client_id', as: 'address' });
+        this.belongsToMany(models.Client, { foreignKey: 'client_id', through: 'client_haircourt', as: 'clients' });
     }
 
 }

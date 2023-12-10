@@ -1,8 +1,8 @@
 const express = require('express');
 
 const ClientController = require('./controllers/ClientController');
-
 const AddressController = require('./controllers/AddressController');
+const HaircourtController = require('./controllers/HaircourtController');
 
 const authMiddleware = require('./middlewares/auth');
 
@@ -22,6 +22,9 @@ router.post('/clients/:client_id/address', AddressController.store);
 router.put('/clients/:id/address', AddressController.update);
 router.delete('/clients/:id/address', AddressController.delete);
 
+router.get('/clients/:client_id/haircourt', HaircourtController.index);
+router.post('/clients/:client_id/haircourt', HaircourtController.store);
+router.delete('/clients/:client_id/haircourt', HaircourtController.delete);
 
 
 module.exports = router;

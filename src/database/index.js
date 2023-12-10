@@ -6,13 +6,16 @@ const connection = new sequelize(dbConfig);
 
 const Client = require('../models/Client');
 const Address = require('../models/Address');
-
+const Haircourt = require('../models/Haircourt');
 
 Client.init(connection);
 Address.init(connection);
+Haircourt.init(connection);
 
 Address.associate(connection.models);
 Client.associate(connection.models);
+Haircourt.associate(connection.models);
+
 
 
 try {
