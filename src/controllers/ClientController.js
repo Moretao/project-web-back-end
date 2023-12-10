@@ -1,6 +1,48 @@
 const Client = require('../models/Client');
+const bcrypt = require('bcryptjs');
+
 
 module.exports = {
+
+    async login(req, res) {
+        const { password, email, islogged } = req.body;
+
+        const client = await Client.findOne({ where: { email } });
+
+        if (!client) {
+            return res.status(400).send({
+                status: 0,
+                message: 'E-mail ou senha incorreta.',
+                client: {}
+            });
+        }
+
+        if (!bcrypt.compareSync(password, user.password)) {
+            return res.status(400).send({
+                status: 0,
+                message: 'E-mail ou senha incorreta.',
+                client: {}
+            });
+        }
+
+        const client_id = client.id;
+
+        await Client.update({
+            islogged
+        }, {
+            where: {
+                id: client_id
+            }
+        });
+
+        client.password = undefined
+
+        return res.status(200).send({
+            status: 1,
+            message: "Usuário logado com sucesso!",
+            client
+        });
+    },
 
     // método de busca
     async index(req, res) {
