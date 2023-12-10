@@ -20,6 +20,11 @@ class Client extends Model {
                 },
             })
     }
+
+    static associate(models) {
+        this.hasMany(models.Address, { foreignKey: 'client_id', as: 'address' });
+    }
+
 }
 
 

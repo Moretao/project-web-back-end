@@ -38,7 +38,7 @@ module.exports = {
         const client_id = client.id;
 
         await Client.update({
-            islogged
+            isLogged
         }, {
             where: {
                 id: client_id

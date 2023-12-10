@@ -5,8 +5,15 @@ const dbConfig = require("../config/database");
 const connection = new sequelize(dbConfig);
 
 const Client = require('../models/Client');
+const Address = require('../models/Address');
+
 
 Client.init(connection);
+Address.init(connection);
+
+Address.associate(connection.models);
+Client.associate(connection.models);
+
 
 try {
     connection.authenticate();
