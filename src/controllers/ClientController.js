@@ -1,6 +1,16 @@
 const Client = require('../models/Client');
 const bcrypt = require('bcryptjs');
 
+const jwt = require('jsonwebtoken');
+
+const authConfig = require('../config/auth')
+
+
+function generateToken(params = {}) {
+    return jwt.sign(params, authConfig.secret, {
+        expiresIn: 78300,
+    });
+}
 
 module.exports = {
 
@@ -37,10 +47,13 @@ module.exports = {
 
         client.password = undefined
 
+
+        const token = generateToken({ id: client.id });
+
         return res.status(200).send({
             status: 1,
             message: "Usuário logado com sucesso!",
-            client
+            client, token
         });
     },
 
@@ -58,23 +71,18 @@ module.exports = {
 
     // método para salvar
     async store(req, res) {
+
         const { name, password, email } = req.body;
 
-        try {
-            const client = await Client.create({ name, password, email });
+        const client = await Client.create({ name, password, email });
 
-            return res.status(200).send({
-                status: 1,
-                message: 'Cliente cadastrado com sucesso.',
-                client
-            });
-        } catch (error) {
-            console.error('Erro ao cadastrar cliente:', error);
-            return res.status(500).send({
-                status: 0,
-                message: 'Erro ao cadastrar cliente.'
-            });
-        }
+        const token = generateToken({ id: client.id });
+
+        return res.status(200).send({
+            status: 1,
+            message: 'Cliente cadastrado com sucesso.',
+            client, token
+        });
 
     },
 
